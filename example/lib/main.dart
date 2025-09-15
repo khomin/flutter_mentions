@@ -31,6 +31,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<FlutterMentionsState> key = GlobalKey<FlutterMentionsState>();
+  late AnnotationEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnnotationEditingController({});
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          RaisedButton(
+          ElevatedButton(
             child: Text('Get Text'),
             onPressed: () {
-              print(key.currentState!.controller!.markupText);
+              print(_controller.markupText);
             },
           ),
           Container(
             child: FlutterMentions(
               key: key,
+              controller: _controller,
               suggestionPosition: SuggestionPosition.Top,
               maxLines: 5,
               minLines: 1,
